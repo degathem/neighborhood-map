@@ -1,0 +1,22 @@
+{
+  "name": "neighborhood-map",
+  "version": "1.0.0",
+  "description": "Neighborhood Map project",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/degathem/neighborhood-map.git"
+  },
+  "author": "Cam Gillespie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/degathem/neighborhood-map/issues"
+  },
+  "homepage": "https://github.com/degathem/neighborhood-map",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
+}

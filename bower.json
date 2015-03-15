@@ -1,0 +1,23 @@
+{
+  "name": "neighborhood-map",
+  "version": "1.0.0",
+  "homepage": "https://github.com/degathem/neighborhood-map",
+  "description": "Neighborhood Map Project",
+  "main": "src/index.html",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "authors": [
+    "Cam Gillespie"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
