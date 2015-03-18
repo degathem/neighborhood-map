@@ -1,3 +1,11 @@
+html, body, .container-fluid, .map, .row {
+	height: 100%;
+}
+
+#map {
+	height: 100%;
+}
 .border-div-test {
 	border: 1px solid red;
 }
+
