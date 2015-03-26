@@ -36,7 +36,7 @@ var pois = [
   },
   {
     'name': 'Phra Athit Chao Phraya River Ferry Station',
-    'coordinates': '13.756534, 100.488898',
+    'coordinates': '13.756534,100.488898',
     'category': 'transit'
   },
   {
@@ -46,7 +46,7 @@ var pois = [
   },
   {
     'name': 'Rajadamnern Boxing Stadium',
-    'coordinates': '13.761111, 100.508889',
+    'coordinates': '13.761111,100.508889',
     'category': 'Entertainment'
   },
 ];

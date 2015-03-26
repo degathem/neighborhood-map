@@ -13,7 +13,8 @@ var initialize = function () {
 google.maps.event.addDomListener(window, 'load', initialize);
 
 var mapViewModel = function (poiArray) {
-  this.pois = ko.observableArray(poiArray);
+  var self = this;
+  self.pois = ko.observableArray(poiArray);
 
 
 };
