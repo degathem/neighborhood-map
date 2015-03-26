@@ -49,4 +49,4 @@ var pois = [
     'coordinates': '13.761111, 100.508889',
     'category': 'Entertainment'
   },
-]:
+];

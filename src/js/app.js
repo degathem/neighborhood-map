@@ -11,3 +11,11 @@ var initialize = function () {
         mapOptions);
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+
+var mapViewModel = function (poiArray) {
+  this.pois = ko.observableArray(poiArray);
+
+
+};
+
+ ko.applyBindings(mapViewModel(pois));
