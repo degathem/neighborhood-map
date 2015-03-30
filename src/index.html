@@ -17,7 +17,7 @@
 				      </span>
 				    </div>
 					<div data-bind="foreach: pois" id="side-panel" class="btn-group-vertical">
-						<button data-bind="text: k.name" type="button" class="btn btn-default"></button>
+						<button data-bind="text: k.name, click: showInfo" type="button" class="btn btn-default"></button>
 					</div>
 				</div>
 				<div id="map" class="col-md-9 border-div-test map"></div>
