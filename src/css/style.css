@@ -10,6 +10,11 @@ html, body, .container-fluid, .map, .row {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
+
+.btn-responsive {
+	white-space: normal;
+	width: 100%
+}
 /**
 .border-div-test {
 	border: 1px solid red;

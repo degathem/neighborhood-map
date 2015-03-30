@@ -108,14 +108,14 @@ var pois = {
       "properties": {
         "name": "Panfa Leelard Canal Ferry Station",
         "category": "transit",
-        "latitude": 13.772500000000001,
-        "longitude": 100.516389
+        "latitude": 13.755551,
+        "longitude": 100.506348
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          100.516389,
-          13.7725
+          100.506348,
+          13.755551          
         ]
       }
     },
