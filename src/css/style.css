@@ -5,7 +5,13 @@ html, body, .container-fluid, .map, .row {
 #map {
 	height: 100%;
 }
+
+.search-area {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+/**
 .border-div-test {
 	border: 1px solid red;
 }
-
+**/

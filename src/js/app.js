@@ -1,22 +1,19 @@
-
-
-var initialize = function () {
-    var mapOptions = {
-      center: { lat: 13.753558, lng: 100.51},
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.MAP,
-      styles: styles
-    };
-    var map = new google.maps.Map(document.getElementById('map'),
-        mapOptions);
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-
 var mapViewModel = function (poiArray) {
+  this.poiArray = poiArray;
+  
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  var features = map.data.addGeoJson(this.poiArray);
+  
+  console.dir(features);
+  google.maps.event.addDomListener(window, 'load', [map,features]);
+  
   var self = this;
-  self.pois = ko.observableArray(poiArray);
 
-
+  self.pois = ko.observableArray(features);
+  
+  
+  
 };
 
- ko.applyBindings(mapViewModel(pois));
+
+ko.applyBindings(mapViewModel(pois));
