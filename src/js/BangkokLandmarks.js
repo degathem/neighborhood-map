@@ -1,4 +1,4 @@
-var pois = {
+var bangkokLandmarks = {
   "type": "FeatureCollection",
   "crs": {
     "type": "name",
@@ -115,7 +115,7 @@ var pois = {
         "type": "Point",
         "coordinates": [
           100.506348,
-          13.755551          
+          13.755551
         ]
       }
     },

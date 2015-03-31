@@ -16,9 +16,13 @@ var mapViewModel = function (poiArray) {
     if (typeof lastinfowindow != 'undefined'){
       lastinfowindow.close();
     };
-    var infowindow = new google.maps.InfoWindow();
+    var currentlatlng = poi.getGeometry().get();
+    var infowindow = new google.maps.InfoWindow({
+      position: currentlatlng,
+      pixelOffset: new google.maps.Size(0,-25)
+    });
 
-    infowindow.setPosition(poi.getGeometry().get())
+    map.panTo(currentlatlng);
     infowindow.open(map);
     lastinfowindow = infowindow;
   };
@@ -26,4 +30,4 @@ var mapViewModel = function (poiArray) {
 };
 
 
-ko.applyBindings(mapViewModel(pois));
+ko.applyBindings(mapViewModel(bangkokLandmarks));
