@@ -106,7 +106,7 @@ var bangkokLandmarks = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Panfa Leelard Canal Ferry Station",
+        "name": "Khlong Saen Saep Boat Panfa Leelard Station",
         "category": "transit",
         "latitude": 13.755551,
         "longitude": 100.506348
@@ -122,7 +122,7 @@ var bangkokLandmarks = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Phra Athit Chao Phraya River Ferry Station",
+        "name": "Chao Phraya Express Boat",
         "category": "transit",
         "latitude": 13.756534,
         "longitude": 100.48889800000001
