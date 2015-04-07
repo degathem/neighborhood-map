@@ -5,7 +5,7 @@ var mapViewModel = function (poiArray) {
 
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
   //var features = map.data.addGeoJson(this.poiArray);
-  
+
 
   self.pois = ko.observableArray(map.data.addGeoJson(self.poiArray));
 
@@ -13,18 +13,29 @@ var mapViewModel = function (poiArray) {
   //self.pois = ko.observableArray(features);
 
   google.maps.event.addDomListener(window, 'load', [map]);
+
+
   var lastinfowindow;
-  
+  //var highlightMarker = new google.maps.Marker;
+
+  self.highlightLocation = function (poi){
+    map.data.overrideStyle(poi,{icon:'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
+
+
+  }
+  self.unhighlightLocation = function (poi){
+    map.data.revertStyle(poi);
+  }
 
   self.showInfo = function (poi){
     if (typeof lastinfowindow != 'undefined'){
       lastinfowindow.close();
     };
-    
+    console.log(map.data.getStyle());
     var currentlatlng = poi.getGeometry().get();
     var currentname = poi.getProperty('name');
     var infowindowcontent = '<h3>' + currentname +'</h3>';
-    
+
     var infowindow = new google.maps.InfoWindow({
       position: currentlatlng,
       pixelOffset: new google.maps.Size(0,-25),
@@ -51,7 +62,7 @@ var mapViewModel = function (poiArray) {
         infowindow.setContent(infowindowcontent);
       })
     };
-    
+
     function flickrCall () {
       $.ajax({
         url: 'https://api.flickr.com/services/rest/',
@@ -77,7 +88,7 @@ var mapViewModel = function (poiArray) {
       })
     };
 
-    
+
 
     wikiCall();
     flickrCall();
@@ -89,9 +100,10 @@ var mapViewModel = function (poiArray) {
 
     //$.ajax({url:'http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json|callback&titles=' + name});
     //console.dir(flickr);
-    
-    //map.data.overrideStyle(poi,{'visible':false});
-    
+
+
+
+
 
     map.panTo(currentlatlng);
     infowindow.open(map);
