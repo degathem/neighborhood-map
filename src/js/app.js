@@ -8,7 +8,7 @@ var mapViewModel = function (poiArray) {
 
 
   self.pois = ko.observableArray(map.data.addGeoJson(self.poiArray));
-
+  map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'})
   //console.dir(features);
   //self.pois = ko.observableArray(features);
 
@@ -32,6 +32,7 @@ var mapViewModel = function (poiArray) {
       lastinfowindow.close();
     };
     console.log(map.data.getStyle());
+    self.highlightLocation(poi);
     var currentlatlng = poi.getGeometry().get();
     var currentname = poi.getProperty('name');
     var infowindowcontent = '<h3>' + currentname +'</h3>';

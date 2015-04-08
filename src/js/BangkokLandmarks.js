@@ -106,7 +106,7 @@ var bangkokLandmarks = {
     {
       "type": "Feature",
       "properties": {
-        "name": "Khlong Saen Saep Boat Panfa Leelard Station",
+        "name": "Khlong Saen Saep Express Boat",
         "category": "transit",
         "latitude": 13.755551,
         "longitude": 100.506348
