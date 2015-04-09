@@ -39,11 +39,13 @@ var mapViewModel = function (poiArray) {
 
     var infowindow = new google.maps.InfoWindow({
       position: currentlatlng,
+      maxwidth: 75,
+      maxheight: 75,
       pixelOffset: new google.maps.Size(-2,-20),
     });
 
     function wikiCall () {
-      
+
       var jsonFlickrApi = $.ajax({
         url: 'http://en.wikipedia.org/w/api.php',
         data: {
@@ -79,7 +81,7 @@ var mapViewModel = function (poiArray) {
           sort: 'interestingness-asc',
           format: 'json',
           iscommons: true,
-          per_page: 10,
+          per_page: 5,
           nojsoncallback: 0
         },
         dataType: 'jsonp',
@@ -96,7 +98,7 @@ var mapViewModel = function (poiArray) {
         infowindowcontent += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
           console.log(photos[i]);
-          photourl = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_'+photos[i].secret + '_n.jpg'; 
+          photourl = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_'+photos[i].secret + '_m.jpg';
           photoimg = '<img src="' + photourl + '">';
           infowindowcontent += photoimg;
         };
