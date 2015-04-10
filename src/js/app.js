@@ -39,9 +39,10 @@ var mapViewModel = function (poiArray) {
 
     var infowindow = new google.maps.InfoWindow({
       position: currentlatlng,
-      maxwidth: 75,
-      maxheight: 75,
+      maxwidth: 50,
+      maxheight: 50,
       pixelOffset: new google.maps.Size(-2,-20),
+      diableAutoPan: true
     });
 
     function wikiCall () {
@@ -98,7 +99,14 @@ var mapViewModel = function (poiArray) {
         infowindowcontent += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
           console.log(photos[i]);
-          photourl = 'https://farm' + photos[i].farm + '.staticflickr.com/' + photos[i].server + '/' + photos[i].id + '_'+photos[i].secret + '_m.jpg';
+          photourl = 'https://farm' 
+                    + photos[i].farm 
+                    + '.staticflickr.com/' 
+                    + photos[i].server + '/' 
+                    + photos[i].id 
+                    + '_'
+                    + photos[i].secret 
+                    + '_m.jpg';
           photoimg = '<img src="' + photourl + '">';
           infowindowcontent += photoimg;
         };
@@ -118,13 +126,13 @@ var mapViewModel = function (poiArray) {
 
     //$.ajax({url:'http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json|callback&titles=' + name});
     //console.dir(flickr);
-
-
-
-
-
+    
+    
     map.panTo(currentlatlng);
+    //var panlat = map.getBounds().getSouthWest().lat();
+    
     infowindow.open(map);
+    map.panTo(new google.maps.LatLng(map.getBounds().getSouthWest().lat(),currentlatlng.lng()));
     lastinfowindow = infowindow;
   };
 
