@@ -39,15 +39,14 @@ var mapViewModel = function (poiArray) {
 
     var infowindow = new google.maps.InfoWindow({
       position: currentlatlng,
-      maxwidth: 50,
-      maxheight: 50,
       pixelOffset: new google.maps.Size(-2,-20),
-      diableAutoPan: true
     });
 
+    map.panTo(currentlatlng);
+    var wikiinfo = '';
     function wikiCall () {
 
-      var jsonFlickrApi = $.ajax({
+      return $.ajax({
         url: 'http://en.wikipedia.org/w/api.php',
         data: {
           action: 'query',
@@ -62,14 +61,14 @@ var mapViewModel = function (poiArray) {
         console.dir(data);
         var url = '<a href="http://en.wikipedia.org/wiki/' + data.query.search[0].title + '">' +
                   'More on Wikipedia</a>';
-        infowindowcontent += data.query.search[0].snippet + '...';
-        infowindowcontent += url;
-        infowindow.setContent(infowindowcontent);
+        wikiinfo += data.query.search[0].snippet + '...';
+        wikiinfo += url;
       })
     };
 
+    var flickrinfo = '';
     function jsonFlickrApi () {
-      $.ajax({
+      return $.ajax({
         url: 'https://api.flickr.com/services/rest/',
         data: {
           method: 'flickr.photos.search',
@@ -99,25 +98,26 @@ var mapViewModel = function (poiArray) {
         infowindowcontent += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
           console.log(photos[i]);
-          photourl = 'https://farm' 
-                    + photos[i].farm 
-                    + '.staticflickr.com/' 
-                    + photos[i].server + '/' 
-                    + photos[i].id 
+          photourl = 'https://farm'
+                    + photos[i].farm
+                    + '.staticflickr.com/'
+                    + photos[i].server + '/'
+                    + photos[i].id
                     + '_'
-                    + photos[i].secret 
+                    + photos[i].secret
                     + '_m.jpg';
           photoimg = '<img src="' + photourl + '">';
-          infowindowcontent += photoimg;
+          flickrinfo += photoimg;
         };
-        infowindow.setContent(infowindowcontent);
       })
     };
 
 
 
-    wikiCall();
-    jsonFlickrApi();
+    $.when(wikiCall(),jsonFlickrApi()).done(function(){
+      infowindowcontent += wikiinfo + '<br>' + flickrinfo;
+      infowindow.setContent(infowindowcontent);
+    });
 
     //flickr api key 32568a779cf80facd0458781d8f9cf02
     //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
@@ -126,13 +126,13 @@ var mapViewModel = function (poiArray) {
 
     //$.ajax({url:'http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json|callback&titles=' + name});
     //console.dir(flickr);
-    
-    
-    map.panTo(currentlatlng);
+
+
+
     //var panlat = map.getBounds().getSouthWest().lat();
-    
+
     infowindow.open(map);
-    map.panTo(new google.maps.LatLng(map.getBounds().getSouthWest().lat(),currentlatlng.lng()));
+    //map.panTo(new google.maps.LatLng(map.getBounds().getSouthWest().lat(),currentlatlng.lng()));
     lastinfowindow = infowindow;
   };
 
