@@ -8,23 +8,26 @@ var mapViewModel = function (poiArray) {
 
 
   self.pois = ko.observableArray(map.data.addGeoJson(self.poiArray));
-  map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'})
+  map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'});
   //console.dir(features);
   //self.pois = ko.observableArray(features);
 
   google.maps.event.addDomListener(window, 'load', [map]);
-
+  var centerlatlng = map.getCenter();
 
   var lastinfowindow;
   //var highlightMarker = new google.maps.Marker;
 
   self.highlightLocation = function (poi){
     map.data.overrideStyle(poi,{icon:'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
-
-
   }
+
   self.unhighlightLocation = function (poi){
     map.data.revertStyle(poi);
+  }
+
+  self.centerMap = function (){
+    map.panTo(centerlatlng);
   }
 
   self.showInfo = function (poi){
@@ -42,7 +45,7 @@ var mapViewModel = function (poiArray) {
       pixelOffset: new google.maps.Size(-2,-20),
     });
 
-    map.panTo(currentlatlng);
+    
     var wikiinfo = '';
     function wikiCall () {
 
@@ -86,16 +89,13 @@ var mapViewModel = function (poiArray) {
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback'
-        // success:function (data) {
-        //   console.dir(data);
-        // }
       })
       .done(function(data) {
         console.dir(data);
         var photos = data.photos.photo;
         var photourl;
         var photoimg
-        infowindowcontent += '<h4>Photos from Flickr</h4>';
+        flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
           console.log(photos[i]);
           photourl = 'https://farm'
@@ -113,12 +113,20 @@ var mapViewModel = function (poiArray) {
     };
 
 
+    //Jquery when function used to ensure wiki content ensures before 
+    //flickr content. Because Asynchronous nature of web, flickr content 
+    //could arrive before wiki.
 
     $.when(wikiCall(),jsonFlickrApi()).done(function(){
       infowindowcontent += wikiinfo + '<br>' + flickrinfo;
       infowindow.setContent(infowindowcontent);
     });
-
+    
+    //Hacky workaround to ensure entire infowindow shows
+    //pan map to northmost bound after panning to point
+    map.panTo({lat:map.getBounds().getNorthEast().lat(),lng:currentlatlng.lng()});
+    console.log(map.getCenter());
+    
     //flickr api key 32568a779cf80facd0458781d8f9cf02
     //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
     //https://farm8.staticflickr.com/7592/16810156278_69184a3ff9.jpg
@@ -132,7 +140,10 @@ var mapViewModel = function (poiArray) {
     //var panlat = map.getBounds().getSouthWest().lat();
 
     infowindow.open(map);
-    //map.panTo(new google.maps.LatLng(map.getBounds().getSouthWest().lat(),currentlatlng.lng()));
+    
+    // Set current window to be last info window, this ensures it will close when 
+    //another location is selected
+
     lastinfowindow = infowindow;
   };
 
