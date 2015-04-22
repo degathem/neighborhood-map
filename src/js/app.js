@@ -44,8 +44,7 @@ var mapViewModel = function (poiArray) {
       position: currentlatlng,
       pixelOffset: new google.maps.Size(-2,-20),
     });
-
-    
+    map.panTo(currentlatlng);
     var wikiinfo = '';
     function wikiCall () {
 
@@ -94,7 +93,7 @@ var mapViewModel = function (poiArray) {
         console.dir(data);
         var photos = data.photos.photo;
         var photourl;
-        var photoimg
+        var photoimg;
         flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
           console.log(photos[i]);
@@ -106,44 +105,32 @@ var mapViewModel = function (poiArray) {
                     + '_'
                     + photos[i].secret
                     + '_m.jpg';
-          photoimg = '<img src="' + photourl + '">';
-          flickrinfo += photoimg;
+          photoimg = '<img class="img-flickr" src="' + photourl + '">';
+          photolink = 'https://www.flickr.com/photos/'
+                    + photos[i].owner + '/'
+                    + photos[i].id;
+          flickrinfo += '<a href="' + photolink + '">' + photoimg +'</a>';
         };
       })
     };
 
-
-    //Jquery when function used to ensure wiki content ensures before 
-    //flickr content. Because Asynchronous nature of web, flickr content 
+    //Jquery 'when' function used to ensure wiki content loads
+    //flickr content. Because Asynchronous nature of web, flickr content
     //could arrive before wiki.
-
     $.when(wikiCall(),jsonFlickrApi()).done(function(){
       infowindowcontent += wikiinfo + '<br>' + flickrinfo;
       infowindow.setContent(infowindowcontent);
+
     });
-    
+
     //Hacky workaround to ensure entire infowindow shows
     //pan map to northmost bound after panning to point
     map.panTo({lat:map.getBounds().getNorthEast().lat(),lng:currentlatlng.lng()});
-    console.log(map.getCenter());
-    
-    //flickr api key 32568a779cf80facd0458781d8f9cf02
-    //https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
-    //https://farm8.staticflickr.com/7592/16810156278_69184a3ff9.jpg
-    //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=4cf0f2a9efa040d39018e0ee4c7c06a3&lat=&lon=&radius=100&radius_units=m&format=json&auth_token=72157649370509514-1d07ab64f2100eb1&api_sig=18c3d42db208421e4b2deb9b7d247e44
-
-    //$.ajax({url:'http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json|callback&titles=' + name});
-    //console.dir(flickr);
-
-
-
-    //var panlat = map.getBounds().getSouthWest().lat();
 
     infowindow.open(map);
-    
-    // Set current window to be last info window, this ensures it will close when 
-    //another location is selected
 
+    // Set current window to be last info window, this ensures it will close when
+    //another location is selected
     lastinfowindow = infowindow;
   };
 

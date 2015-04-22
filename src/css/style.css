@@ -15,6 +15,10 @@ html, body, .container-fluid, .map, .row {
 	white-space: normal;
 	width: 100%
 }
+
+.img-flickr{
+	padding: 2px;
+}
 /**
 .border-div-test {
 	border: 1px solid red;
