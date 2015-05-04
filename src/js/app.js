@@ -17,7 +17,11 @@ var mapViewModel = function (poiArray) {
 
   var lastinfowindow;
   //var highlightMarker = new google.maps.Marker;
-
+  self.closeInfowindow = function () {
+    if (typeof lastinfowindow != 'undefined'){
+      lastinfowindow.close();
+    };
+  }
   self.highlightLocation = function (poi){
     map.data.overrideStyle(poi,{icon:'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
   }
@@ -28,17 +32,18 @@ var mapViewModel = function (poiArray) {
 
   self.centerMap = function (){
     map.panTo(centerlatlng);
+    map.setZoom(14);
+    closeInfowindow();
   }
 
   self.showInfo = function (poi){
-    if (typeof lastinfowindow != 'undefined'){
-      lastinfowindow.close();
-    };
+    closeInfowindow();
     console.log(map.data.getStyle());
     self.highlightLocation(poi);
     var currentlatlng = poi.getGeometry().get();
     var currentname = poi.getProperty('name');
-    var infowindowcontent = '<h3>' + currentname +'</h3>';
+    var currentcategory = poi.getProperty('category')
+    var infowindowcontent = '<h3>' + currentname + ' - ' + currentcategory+'</h3>';
 
     var infowindow = new google.maps.InfoWindow({
       position: currentlatlng,

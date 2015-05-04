@@ -16,10 +16,16 @@
 				        <button class="btn btn-default" type="button">Go!</button>
 				      </span>
 				    </div>
+						<div class"btn-group" role="group">
+							<button data-bind="click:centerMap" type="button" class="btn btn-default">Reset Map</button>
+
+						</div>
 					<div data-bind="foreach: pois" id="side-panel" class="btn-group btn-group-lg btn-group-vertical">
-						<button data-bind="text: k.name, click: showInfo, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" type="button" class="btn btn-default btn-responsive"></button>
+						<button data-bind="text: getProperty('name'), click: showInfo, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" type="button" class="btn btn-default btn-responsive"></button>
 					</div>
+
 				</div>
+
 				<div id="map" class="col-md-9 border-div-test map"></div>
 			</div>
 		</div>
