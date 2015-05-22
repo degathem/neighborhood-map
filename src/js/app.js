@@ -1,13 +1,13 @@
 var mapViewModel = function (poiArray) {
   var self = this;
 
-  self.poiArray = poiArray;
+  
 
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
   //var features = map.data.addGeoJson(this.poiArray);
 
 
-  self.pois = ko.observableArray(map.data.addGeoJson(self.poiArray));
+  
   map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'});
   //console.dir(features);
   //self.pois = ko.observableArray(features);
@@ -17,6 +17,18 @@ var mapViewModel = function (poiArray) {
 
   var lastinfowindow;
   //var highlightMarker = new google.maps.Marker;
+  self.featureArray;
+
+  var renderMapList = function (activePois) {
+    featureArray = ko.observableArray(map.data.addGeoJson(activePois));
+    
+  }
+
+  self.search = function () {
+
+
+  }
+
   self.closeInfowindow = function () {
     if (typeof lastinfowindow != 'undefined'){
       lastinfowindow.close();
@@ -30,12 +42,19 @@ var mapViewModel = function (poiArray) {
     map.data.revertStyle(poi);
   }
 
-  self.centerMap = function (){
+  var init = function () {
+    renderMapList(poiArray);
+  }
+  
+  self.resetMap = function (){
     map.panTo(centerlatlng);
     map.setZoom(14);
     closeInfowindow();
+
+    init();
   }
 
+  
   self.showInfo = function (poi){
     closeInfowindow();
     console.log(map.data.getStyle());
@@ -137,8 +156,12 @@ var mapViewModel = function (poiArray) {
     // Set current window to be last info window, this ensures it will close when
     //another location is selected
     lastinfowindow = infowindow;
-  };
 
+
+  };
+  
+
+  init();
 };
 
 
