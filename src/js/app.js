@@ -16,17 +16,30 @@ var mapViewModel = function (poiArray) {
   var centerlatlng = map.getCenter();
 
   var lastinfowindow;
-  //var highlightMarker = new google.maps.Marker;
+  
   self.featureArray;
+  self.searchTerm = '';
 
   var renderMapList = function (activePois) {
-    featureArray = ko.observableArray(map.data.addGeoJson(activePois));
+    console.log(activePois)
+    self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
     
   }
 
+
   self.search = function () {
-
-
+    console.log(self.searchTerm);
+    var searchArray = poiArray;
+    for (var i = 0; i < poiArray.features.length; i++) {
+      
+      if (poiArray.features[i].properties.name.search(self.searchTerm) === -1) {
+        var index = searchArray.features.indexOf(poiArray.features[i]);
+        searchArray.features.splice(index,1);
+      }
+    };
+    console.log(searchArray)
+    self.featureArray.removeAll();
+    renderMapList(searchArray);
   }
 
   self.closeInfowindow = function () {
@@ -45,7 +58,7 @@ var mapViewModel = function (poiArray) {
   var init = function () {
     renderMapList(poiArray);
   }
-  
+
   self.resetMap = function (){
     map.panTo(centerlatlng);
     map.setZoom(14);

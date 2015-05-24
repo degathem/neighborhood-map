@@ -10,16 +10,15 @@
 
 			<div class="row">
 				<div class="col-md-3">
-					<form class="input-group search-area">
-				      <input type="text" class="form-control" placeholder="Search for...">
+					<div class="input-group search-area">
+				      <input data-bind="value: searchTerm" type="search" class="form-control" placeholder="Search for...">
 				      <span class="input-group-btn">
-				        <button class="btn btn-default" type="button">Go!</button>
+				        <button data-bind="click: search" class="btn btn-default" type="submit">Go!</button>
 				      </span>
-				    </form>
-						<div class"btn-group" role="group">
-							<button data-bind="click:resetMap" type="button" class="btn btn-default">Reset Map</button>
-
-						</div>
+				    </div>
+					<div class"btn-group" role="group">
+						<button data-bind="click:resetMap" type="button" class="btn btn-default">Reset Map</button>
+					</div>
 					<div data-bind="foreach: featureArray" id="side-panel" class="btn-group btn-group-lg btn-group-vertical">
 						<button data-bind="text: getProperty('name'), click: showInfo, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" type="button" class="btn btn-default btn-responsive"></button>
 					</div>
