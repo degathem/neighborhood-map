@@ -20,7 +20,7 @@
 						<button data-bind="click:resetMap" type="button" class="btn btn-default">Reset Map</button>
 					</div>
 					<div data-bind="foreach: featureArray" id="side-panel" class="btn-group btn-group-lg btn-group-vertical">
-						<button data-bind="text: getProperty('name'), click: showInfo, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" type="button" class="btn btn-default btn-responsive"></button>
+						<button data-bind="text: getProperty('name'), click: showInfo, visible: active, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" type="button" class="btn btn-default btn-responsive"></button>
 					</div>
 
 				</div>

@@ -17,29 +17,33 @@ var mapViewModel = function (poiArray) {
 
   var lastinfowindow;
   
-  self.featureArray;
+  //self.featureArray;
   self.searchTerm = '';
 
   var renderMapList = function (activePois) {
-    console.log(activePois)
+    //console.log(activePois)
     self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
-    
+    for (var i = 0; i < self.featureArray().length; i++) {
+      self.featureArray()[i].active = ko.observable(true);
+
+    };
+    console.dir(self.featureArray());
   }
 
 
   self.search = function () {
     console.log(self.searchTerm);
-    var searchArray = poiArray;
-    for (var i = 0; i < poiArray.features.length; i++) {
-      
-      if (poiArray.features[i].properties.name.search(self.searchTerm) === -1) {
-        var index = searchArray.features.indexOf(poiArray.features[i]);
-        searchArray.features.splice(index,1);
+    
+    for (var i = 0; i < self.featureArray().length; i++) {
+      if (self.featureArray()[i].getProperty('name').search(self.searchTerm) === -1) {
+        self.featureArray()[i].active(false);
       }
     };
-    console.log(searchArray)
-    self.featureArray.removeAll();
-    renderMapList(searchArray);
+    //console.log(searchArray)
+    for (var i = 0; i < self.featureArray().length; i++) {
+      console.log(self.featureArray()[i].active);
+    };
+    
   }
 
   self.closeInfowindow = function () {
@@ -63,8 +67,10 @@ var mapViewModel = function (poiArray) {
     map.panTo(centerlatlng);
     map.setZoom(14);
     closeInfowindow();
-
-    init();
+    for (var i = 0; i < self.featureArray().length; i++) {
+      self.featureArray()[i].active(true);
+    };
+    
   }
 
   
