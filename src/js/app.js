@@ -1,38 +1,27 @@
 var mapViewModel = function (poiArray) {
   var self = this;
 
-  
-
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  //var features = map.data.addGeoJson(this.poiArray);
-
-
-  
+ 
   map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable:false});
-  //console.dir(features);
-  //self.pois = ko.observableArray(features);
 
   google.maps.event.addDomListener(window, 'load', [map]);
   var centerlatlng = map.getCenter();
 
   var lastinfowindow;
   
-  //self.featureArray;
   self.searchTerm = '';
 
   var renderMapList = function (activePois) {
-    //console.log(activePois)
     self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active = ko.observable(true);
-
     };
-    console.dir(self.featureArray());
   }
 
 
   self.search = function () {
-    console.log(self.searchTerm);
+    
     closeInfowindow();
     self.resetMap()
     for (var i = 0; i < self.featureArray().length; i++) {
@@ -41,11 +30,6 @@ var mapViewModel = function (poiArray) {
         map.data.overrideStyle(self.featureArray()[i],{visible:false});
       }
     };
-    //console.log(searchArray)
-    for (var i = 0; i < self.featureArray().length; i++) {
-      console.log(self.featureArray()[i].active);
-    };
-    
   }
 
   self.closeInfowindow = function () {
@@ -81,7 +65,6 @@ var mapViewModel = function (poiArray) {
   
   self.showInfo = function (poi){
     closeInfowindow();
-    console.log(map.data.getStyle());
     self.highlightLocation(poi);
     var currentlatlng = poi.getGeometry().get();
     var currentname = poi.getProperty('name');
@@ -144,7 +127,7 @@ var mapViewModel = function (poiArray) {
         var photoimg;
         flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
-          console.log(photos[i]);
+    
           photourl = 'https://farm'
                     + photos[i].farm
                     + '.staticflickr.com/'
@@ -162,8 +145,8 @@ var mapViewModel = function (poiArray) {
       })
     };
 
-    //Jquery 'when' function used to ensure wiki content loads
-    //flickr content. Because Asynchronous nature of web, flickr content
+    //Jquery 'when' function used to ensure wiki content loads before
+    //flickr content in infowindow. Because Asynchronous nature of web, flickr content
     //could arrive before wiki.
     $.when(wikiCall(),jsonFlickrApi()).done(function(){
       infowindowcontent += wikiinfo + '<br>' + flickrinfo;
