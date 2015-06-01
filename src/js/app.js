@@ -8,7 +8,7 @@ var mapViewModel = function (poiArray) {
 
 
   
-  map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'});
+  map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable:false});
   //console.dir(features);
   //self.pois = ko.observableArray(features);
 
@@ -33,10 +33,12 @@ var mapViewModel = function (poiArray) {
 
   self.search = function () {
     console.log(self.searchTerm);
-    
+    closeInfowindow();
+    self.resetMap()
     for (var i = 0; i < self.featureArray().length; i++) {
       if (self.featureArray()[i].getProperty('name').search(self.searchTerm) === -1) {
         self.featureArray()[i].active(false);
+        map.data.overrideStyle(self.featureArray()[i],{visible:false});
       }
     };
     //console.log(searchArray)
@@ -61,14 +63,17 @@ var mapViewModel = function (poiArray) {
 
   var init = function () {
     renderMapList(poiArray);
+
   }
 
   self.resetMap = function (){
     map.panTo(centerlatlng);
     map.setZoom(14);
     closeInfowindow();
+    
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active(true);
+      map.data.overrideStyle(self.featureArray()[i],{visible:true});
     };
     
   }
