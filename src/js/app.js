@@ -2,14 +2,14 @@ var mapViewModel = function (poiArray) {
   var self = this;
 
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
+ 
   map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable:false});
 
   google.maps.event.addDomListener(window, 'load', [map]);
   var centerlatlng = map.getCenter();
 
   var lastinfowindow;
-
+  
   self.searchTerm = '';
 
   var renderMapList = function (activePois) {
@@ -19,7 +19,9 @@ var mapViewModel = function (poiArray) {
     };
   }
 
+
   self.search = function () {
+    
     closeInfowindow();
     self.resetMap()
     for (var i = 0; i < self.featureArray().length; i++) {
@@ -45,19 +47,22 @@ var mapViewModel = function (poiArray) {
 
   var init = function () {
     renderMapList(poiArray);
+
   }
 
   self.resetMap = function (){
     map.panTo(centerlatlng);
     map.setZoom(14);
     closeInfowindow();
-
+    
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active(true);
       map.data.overrideStyle(self.featureArray()[i],{visible:true});
     };
+    
   }
 
+  
   self.showInfo = function (poi){
     closeInfowindow();
     self.highlightLocation(poi);
@@ -70,12 +75,10 @@ var mapViewModel = function (poiArray) {
       position: currentlatlng,
       pixelOffset: new google.maps.Size(-2,-20),
     });
-
     map.panTo(currentlatlng);
-
     var wikiinfo = '';
-
     function wikiCall () {
+
       return $.ajax({
         url: 'http://en.wikipedia.org/w/api.php',
         data: {
@@ -124,7 +127,7 @@ var mapViewModel = function (poiArray) {
         var photoimg;
         flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
-
+    
           photourl = 'https://farm'
                     + photos[i].farm
                     + '.staticflickr.com/'
@@ -160,8 +163,10 @@ var mapViewModel = function (poiArray) {
     // Set current window to be last info window, this ensures it will close when
     //another location is selected
     lastinfowindow = infowindow;
-  };
 
+
+  };
+  
 
   init();
 };
