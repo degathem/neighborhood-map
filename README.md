@@ -6,7 +6,7 @@ Locations are stored in the [GeoJSON format](http://geojson.org/), which the Goo
 
 [Bower](http://bower.io) is used to manage libraries used - [Bootstrap](http://getbootstrap.com/) and [Knockoutjs](http://knockoutjs.com)
 
-[Gulp](http://www.gulp.com) is used to package the javascript and css files from src directory and move them into the dist directory. This means that opening index.html from either the src or dist folder will work, but the production version of the site will use the dist folder.
+[Gulp](http://www.gulp.com) is used to package the javascript and css files from src directory and move them into the dist directory. This means that opening index.html from either the src or dist folder will work, but the production version of the site will use the dist folder (after building using 'gulp usemin'.
 
 Unfortunately the site is not optimized for mobile.
 
