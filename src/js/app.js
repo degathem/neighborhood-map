@@ -1,35 +1,20 @@
 var mapViewModel = function (poiArray) {
   var self = this;
-
+  var lastinfowindow;
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
- 
-  map.data.setStyle({icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable:false});
+
+  map.data.setStyle({icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable: false});
 
   google.maps.event.addDomListener(window, 'load', [map]);
   var centerlatlng = map.getCenter();
-
-  var lastinfowindow;
   
   self.searchTerm = '';
 
-  var renderMapList = function (activePois) {
+  self.renderMapList = function (activePois) {
     self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active = ko.observable(true);
-    };
-  }
-
-
-  self.search = function () {
-    
-    closeInfowindow();
-    self.resetMap()
-    for (var i = 0; i < self.featureArray().length; i++) {
-      if (self.featureArray()[i].getProperty('name').search(self.searchTerm) === -1) {
-        self.featureArray()[i].active(false);
-        map.data.overrideStyle(self.featureArray()[i],{visible:false});
-      }
-    };
+    }
   }
 
   self.closeInfowindow = function () {
@@ -37,17 +22,24 @@ var mapViewModel = function (poiArray) {
       lastinfowindow.close();
     };
   }
+
+  self.search = function () {
+    closeInfowindow();
+    self.resetMap()
+    for (var i = 0; i < self.featureArray().length; i++) {
+      if (self.featureArray()[i].getProperty('name').search(self.searchTerm) === -1) {
+        self.featureArray()[i].active(false);
+        map.data.overrideStyle(self.featureArray()[i],{visible:false});
+      }
+    }
+  }
+
   self.highlightLocation = function (poi){
-    map.data.overrideStyle(poi,{icon:'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
+    map.data.overrideStyle(poi,{icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
   }
 
   self.unhighlightLocation = function (poi){
     map.data.revertStyle(poi);
-  }
-
-  var init = function () {
-    renderMapList(poiArray);
-
   }
 
   self.resetMap = function (){
@@ -62,7 +54,6 @@ var mapViewModel = function (poiArray) {
     
   }
 
-  
   self.showInfo = function (poi){
     closeInfowindow();
     self.highlightLocation(poi);
@@ -75,23 +66,26 @@ var mapViewModel = function (poiArray) {
       position: currentlatlng,
       pixelOffset: new google.maps.Size(-2,-20),
     });
+    
     map.panTo(currentlatlng);
+    
     var wikiinfo = '';
     function wikiCall () {
-
       return $.ajax({
         url: 'http://en.wikipedia.org/w/api.php',
         data: {
           action: 'query',
-          list:'search',
-          format:'json',
+          list: 'search',
+          format: 'json',
           srsearch: currentname,
           srlimit: 1
         },
         dataType: 'jsonp',
       })
+      .fail(function(data) {
+        wikiinfo = 'Wikipedia data unavailable.';
+      })
       .done(function(data){
-        console.dir(data);
         var url = '<a href="http://en.wikipedia.org/wiki/' + data.query.search[0].title + '">' +
                   'More on Wikipedia</a>';
         wikiinfo += data.query.search[0].snippet + '...';
@@ -114,14 +108,17 @@ var mapViewModel = function (poiArray) {
           sort: 'interestingness-asc',
           format: 'json',
           iscommons: true,
-          per_page: 5,
+          page: 1,
+          per_page: 10,
           nojsoncallback: 0
         },
         dataType: 'jsonp',
         jsonp: 'jsoncallback'
       })
+      .fail(function(data){
+        flickrinfo += 'Flickr Photos unavailable';
+      })
       .done(function(data) {
-        console.dir(data);
         var photos = data.photos.photo;
         var photourl;
         var photoimg;
@@ -140,19 +137,22 @@ var mapViewModel = function (poiArray) {
           photolink = 'https://www.flickr.com/photos/'
                     + photos[i].owner + '/'
                     + photos[i].id;
-          flickrinfo += '<a href="' + photolink + '">' + photoimg +'</a>';
-        };
+          flickrinfo += '<a href="' + photolink + '">' + photoimg +'</a>';}
+      
       })
     };
 
     //Jquery 'when' function used to ensure wiki content loads before
     //flickr content in infowindow. Because Asynchronous nature of web, flickr content
-    //could arrive before wiki.
-    $.when(wikiCall(),jsonFlickrApi()).done(function(){
-      infowindowcontent += wikiinfo + '<br>' + flickrinfo;
-      infowindow.setContent(infowindowcontent);
-
-    });
+    //could arrive before wiki. Nested whens enable failure messages in map infowindow
+    $.when(wikiCall()
+    .always(function(){
+      $.when(jsonFlickrApi())
+      .always(function(){
+        infowindowcontent += wikiinfo + '<br>' + flickrinfo;
+        infowindow.setContent(infowindowcontent);
+      })
+    }));
 
     //Hacky workaround to ensure entire infowindow shows
     //pan map to northmost bound after panning to point
@@ -163,13 +163,9 @@ var mapViewModel = function (poiArray) {
     // Set current window to be last info window, this ensures it will close when
     //another location is selected
     lastinfowindow = infowindow;
-
-
   };
-  
-
-  init();
+  renderMapList(poiArray);
 };
 
-
+// Pass in the Bangkok Lanmarks geojson into viewmodel
 ko.applyBindings(mapViewModel(bangkokLandmarks));
