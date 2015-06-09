@@ -17,6 +17,11 @@ gulp.task('usemin', function() {
     .pipe(gulp.dest('build/'));
 });
 
+gulp.task('livereload', function() {
+    livereload();
+    livereload.reload('./src/index.html');
+})
+
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(['./src/js/*.js','./src/css/*.css','./src/index.html'],['livereload'])

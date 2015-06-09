@@ -3,7 +3,7 @@ var mapViewModel = function (poiArray) {
   var lastinfowindow;
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-  map.data.setStyle({icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable: false});
+  map.data.setStyle({icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'});
 
   google.maps.event.addDomListener(window, 'load', [map]);
   var centerlatlng = map.getCenter();
@@ -14,6 +14,7 @@ var mapViewModel = function (poiArray) {
     self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active = ko.observable(true);
+      self.featureArray()[i].clicked = ko.observable(false);
     }
   }
 
@@ -53,8 +54,13 @@ var mapViewModel = function (poiArray) {
     };
     
   }
-
+  var lastpoi;
   self.showInfo = function (poi){
+    if (typeof lastpoi != 'undefined'){
+      lastpoi.clicked(false);
+    }
+    poi.clicked(true);
+    lastpoi = poi;
     closeInfowindow();
     self.highlightLocation(poi);
     var currentlatlng = poi.getGeometry().get();
@@ -164,6 +170,10 @@ var mapViewModel = function (poiArray) {
     //another location is selected
     lastinfowindow = infowindow;
   };
+  
+  map.data.addListener('click',function(event){
+    console.log(event.feature.getId());
+  });
   renderMapList(poiArray);
 };
 
