@@ -3,7 +3,7 @@ var mapViewModel = function (poiArray) {
   var lastinfowindow;
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-  map.data.setStyle({icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png', clickable: false});
+  map.data.setStyle({icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/red.png'});
 
   google.maps.event.addDomListener(window, 'load', [map]);
   var centerlatlng = map.getCenter();
@@ -170,6 +170,10 @@ var mapViewModel = function (poiArray) {
     //another location is selected
     lastinfowindow = infowindow;
   };
+  
+  map.data.addListener('click',function(event){
+    console.log(event.feature.getId());
+  });
   renderMapList(poiArray);
 };
 
