@@ -7,7 +7,7 @@ var mapViewModel = function (poiArray) {
 
   google.maps.event.addDomListener(window, 'load', [map]);
   var centerlatlng = map.getCenter();
-  
+
   self.searchTerm = '';
 
   self.renderMapList = function (activePois) {
@@ -47,12 +47,12 @@ var mapViewModel = function (poiArray) {
     map.panTo(centerlatlng);
     map.setZoom(14);
     closeInfowindow();
-    
+
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active(true);
       map.data.overrideStyle(self.featureArray()[i],{visible:true});
     };
-    
+
   }
   var lastpoi;
   self.showInfo = function (poi){
@@ -72,9 +72,9 @@ var mapViewModel = function (poiArray) {
       position: currentlatlng,
       pixelOffset: new google.maps.Size(-2,-20),
     });
-    
+
     map.panTo(currentlatlng);
-    
+
     var wikiinfo = '';
     function wikiCall () {
       return $.ajax({
@@ -130,7 +130,7 @@ var mapViewModel = function (poiArray) {
         var photoimg;
         flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
-    
+
           photourl = 'https://farm'
                     + photos[i].farm
                     + '.staticflickr.com/'
@@ -144,7 +144,7 @@ var mapViewModel = function (poiArray) {
                     + photos[i].owner + '/'
                     + photos[i].id;
           flickrinfo += '<a href="' + photolink + '">' + photoimg +'</a>';}
-      
+
       })
     };
 
@@ -170,9 +170,13 @@ var mapViewModel = function (poiArray) {
     //another location is selected
     lastinfowindow = infowindow;
   };
-  
+
   map.data.addListener('click',function(event){
-    console.log(event.feature.getId());
+    console.log(event.feature.getProperty('name'));
+    var name = event.feature.getProperty('name');
+    for (var i = 0; i < self.featureArray().length; i++) {
+      self.featureArray()[i]
+    }
   });
   renderMapList(poiArray);
 };

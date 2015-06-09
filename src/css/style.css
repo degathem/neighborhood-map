@@ -9,7 +9,13 @@ body {
 	height: 100%;
 	width: 100%
 }
-
+.title-brand {
+  margin-top: 0px;
+  margin-bottom: 0px
+}
+.search-area {
+  padding-top: 5px;
+}
 .navmenu {
   padding-top: 50px;
 }
@@ -34,6 +40,9 @@ body {
 
 .img-flickr{
 	padding: 2px;
+}
+#reset-button{
+  margin-left: 15px;
 }
 
 @media (min-width: 1px) {
