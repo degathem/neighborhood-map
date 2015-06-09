@@ -14,6 +14,7 @@ var mapViewModel = function (poiArray) {
     self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active = ko.observable(true);
+      self.featureArray()[i].clicked = ko.observable(false);
     }
   }
 
@@ -53,8 +54,13 @@ var mapViewModel = function (poiArray) {
     };
     
   }
-
+  var lastpoi;
   self.showInfo = function (poi){
+    if (typeof lastpoi != 'undefined'){
+      lastpoi.clicked(false);
+    }
+    poi.clicked(true);
+    lastpoi = poi;
     closeInfowindow();
     self.highlightLocation(poi);
     var currentlatlng = poi.getGeometry().get();
