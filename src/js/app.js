@@ -56,11 +56,6 @@ var mapViewModel = function (poiArray) {
   };
   var lastpoi;
   self.showInfo = function (poi){
-    
-    if ($(window).width() <= 992) {
-      $('.navmenu').offcanvas('toggle');
-    }
-
     if (typeof lastpoi != 'undefined'){
       lastpoi.clicked(false);
     }
