@@ -1,5 +1,18 @@
 node_modules
-build
+src/components/jasny-bootstrap/.bower.json
+src/components/jasny-bootstrap/Gruntfile.js
+src/components/jasny-bootstrap/LICENSE
+src/components/jasny-bootstrap/README.md
+src/components/jasny-bootstrap/bower.json
+src/components/jasny-bootstrap/dist/css/jasny-bootstrap.css
+src/components/jasny-bootstrap/dist/css/jasny-bootstrap.css.map
+src/components/jasny-bootstrap/dist/js/jasny-bootstrap.js
+src/components/jasny-bootstrap/grunt/
+src/components/jasny-bootstrap/js/
+src/components/jasny-bootstrap/less/
+src/components/jasny-bootstrap/package.json
+src/components/jasny-bootstrap/scss/
+src/components/jasny-bootstrap/test-infra/
 
 # OS generated files #
 ######################

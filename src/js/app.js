@@ -56,6 +56,7 @@ var mapViewModel = function (poiArray) {
   }
   var lastpoi;
   self.showInfo = function (poi){
+    
     if (typeof lastpoi != 'undefined'){
       lastpoi.clicked(false);
     }
@@ -115,7 +116,7 @@ var mapViewModel = function (poiArray) {
           format: 'json',
           iscommons: true,
           page: 1,
-          per_page: 10,
+          per_page: 5,
           nojsoncallback: 0
         },
         dataType: 'jsonp',
@@ -171,11 +172,13 @@ var mapViewModel = function (poiArray) {
     lastinfowindow = infowindow;
   };
 
+  // Clicking a point feature opens an info window 
   map.data.addListener('click',function(event){
-    console.log(event.feature.getProperty('name'));
-    var name = event.feature.getProperty('name');
+    var featureName = event.feature.getProperty('name');
     for (var i = 0; i < self.featureArray().length; i++) {
-      self.featureArray()[i]
+      if (self.featureArray()[i].getProperty('name') ===  featureName){
+        self.showInfo(self.featureArray()[i]);
+      }
     }
   });
   renderMapList(poiArray);
