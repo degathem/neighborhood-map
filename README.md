@@ -20,4 +20,5 @@ Unfortunately the site is not optimized for mobile.
 * [JQuery Deffered Object](https://api.jquery.com/category/deferred-object/)
 * [Stackoverflow JQuery.when Understanding](http://stackoverflow.com/questions/5280699/jquery-when-understanding)
 * [Google Maps Javascript API Reference](https://developers.google.com/maps/documentation/javascript/reference)
+* Responsiveness Off Canvas Menu from Jasny Bootstrap [http://jasny.github.io/bootstrap/javascript/#offcanvas](http://jasny.github.io/bootstrap/javascript/#offcanvas)
 
