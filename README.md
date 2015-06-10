@@ -1,5 +1,9 @@
 # Neighborhood Map Project for Udacity Frontend Web Dev Nanodegree
 
+Page can be reviewed on the github project page here: [http://degathem.github.io/neighborhood-map/](http://degathem.github.io/neighborhood-map/)
+
+Code can be reviewed in the src folder in this repository.
+
 The map presents the user with a list and map of interesting places to visit in the old part of Bangkok. It utilizes the [Wikipedia api](http://www.mediawiki.org/wiki/API:Main_page) to present a short snippet on the place with a link, and the [Flickr api](https://www.flickr.com/services/api/) to grab the first 10 pictures matching the place name within a 100 metre radius sorted by [interestingness](https://www.flickr.com/explore/interesting/).
 
 Locations are stored in the [GeoJSON format](http://geojson.org/), which the Google maps api can read and render. [QGIS](http://www.qgis.org) an open source Geographical Information System (GIS) and mapping program was used to create the GeoJSON data.

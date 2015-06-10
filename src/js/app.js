@@ -70,7 +70,7 @@ var mapViewModel = function (poiArray) {
     self.highlightLocation(poi);
     var currentlatlng = poi.getGeometry().get();
     var currentname = poi.getProperty('name');
-    var currentcategory = poi.getProperty('category')
+    var currentcategory = poi.getProperty('category');
     var infowindowcontent = '<h3>' + currentname + ' - ' + currentcategory+'</h3>';
 
     var infowindow = new google.maps.InfoWindow({
@@ -101,8 +101,8 @@ var mapViewModel = function (poiArray) {
                   'More on Wikipedia</a>';
         wikiinfo += data.query.search[0].snippet + '...';
         wikiinfo += url;
-      })
-    };
+      });
+    }
 
     var flickrinfo = '';
     function jsonFlickrApi () {
@@ -150,8 +150,8 @@ var mapViewModel = function (poiArray) {
                       photos[i].id;
           flickrinfo += '<a href="' + photolink + '">' + photoimg +'</a>';}
 
-      })
-    };
+      });
+    }
 
     //Jquery 'when' function used to ensure wiki content loads before
     //flickr content in infowindow. Because Asynchronous nature of web, flickr content
@@ -162,7 +162,7 @@ var mapViewModel = function (poiArray) {
       .always(function(){
         infowindowcontent += wikiinfo + '<br>' + flickrinfo;
         infowindow.setContent(infowindowcontent);
-      })
+      });
     }));
 
     //Hacky workaround to ensure entire infowindow shows
