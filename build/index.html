@@ -15,7 +15,7 @@
 				</span>
 			</div>
 			<ul data-bind="foreach: featureArray" class="nav navmenu-nav" >
-				<li data-bind="css:{active:$data.clicked}"><a data-bind="text: getProperty('name'), click: showInfo, visible: active, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" data-toggle="offcanvas" data-target=".navmenu" href="#"></a></li>
+				<li class="poi-list-item" data-bind="css:{active:$data.clicked}"><a data-bind="text: getProperty('name'), click: showInfo, visible: active, event:{mouseover:highlightLocation, mouseout:unhighlightLocation}" href="#"></a></li>
 
 			</ul>
 			<button id="reset-button" data-bind="click:resetMap" type="button" class="btn btn-default" >Reset Map</button>
