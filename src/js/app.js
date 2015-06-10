@@ -16,32 +16,32 @@ var mapViewModel = function (poiArray) {
       self.featureArray()[i].active = ko.observable(true);
       self.featureArray()[i].clicked = ko.observable(false);
     }
-  }
+  };
 
   self.closeInfowindow = function () {
     if (typeof lastinfowindow != 'undefined'){
       lastinfowindow.close();
-    };
-  }
+    }
+  };
 
   self.search = function () {
     closeInfowindow();
-    self.resetMap()
+    self.resetMap();
     for (var i = 0; i < self.featureArray().length; i++) {
       if (self.featureArray()[i].getProperty('name').search(self.searchTerm) === -1) {
         self.featureArray()[i].active(false);
         map.data.overrideStyle(self.featureArray()[i],{visible:false});
       }
     }
-  }
+  };
 
   self.highlightLocation = function (poi){
     map.data.overrideStyle(poi,{icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
-  }
+  };
 
   self.unhighlightLocation = function (poi){
     map.data.revertStyle(poi);
-  }
+  };
 
   self.resetMap = function (){
     map.panTo(centerlatlng);
@@ -51,12 +51,16 @@ var mapViewModel = function (poiArray) {
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active(true);
       map.data.overrideStyle(self.featureArray()[i],{visible:true});
-    };
+    }
 
-  }
+  };
   var lastpoi;
   self.showInfo = function (poi){
     
+    if ($(window).width() <= 992) {
+      $('.navmenu').offcanvas('toggle');
+    }
+
     if (typeof lastpoi != 'undefined'){
       lastpoi.clicked(false);
     }
@@ -132,18 +136,18 @@ var mapViewModel = function (poiArray) {
         flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
 
-          photourl = 'https://farm'
-                    + photos[i].farm
-                    + '.staticflickr.com/'
-                    + photos[i].server + '/'
-                    + photos[i].id
-                    + '_'
-                    + photos[i].secret
-                    + '_m.jpg';
+          photourl = 'https://farm' +
+                    photos[i].farm +
+                    '.staticflickr.com/' +
+                    photos[i].server + '/' +
+                    photos[i].id +
+                    '_' +
+                    photos[i].secret +
+                    '_m.jpg';
           photoimg = '<img class="img-flickr" src="' + photourl + '">';
-          photolink = 'https://www.flickr.com/photos/'
-                    + photos[i].owner + '/'
-                    + photos[i].id;
+          photolink = 'https://www.flickr.com/photos/' +
+                      photos[i].owner + '/' +
+                      photos[i].id;
           flickrinfo += '<a href="' + photolink + '">' + photoimg +'</a>';}
 
       })
