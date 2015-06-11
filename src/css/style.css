@@ -1,33 +1,40 @@
-html, body {
+html,
+body {
   height: 100%;
 }
+
 body {
   padding: 50px 0 0 0;
 }
 
-#map {
+.map {
 	height: 100%;
-	width: 100%
+	width: 100%;
 }
+
 .title-brand {
-  margin-top: 0px;
-  margin-bottom: 0px
+  margin-top: 0;
+  margin-bottom: 0;
 }
+
 .search-area {
-  padding-top: 5px;
+  padding: 5px 0 0 0;
 }
+
 .navmenu {
-  padding-top: 50px;
+  padding: 50px 0 0 0;
 }
 
 .navbar {
   display: block;
   text-align: center;
 }
+
 .navbar-brand {
   display: inline-block;
   float: none;
 }
+
 .navbar-toggle {
   position: absolute;
   float: left;
@@ -38,10 +45,11 @@ body {
   max-width: 100%;
 }
 
-.img-flickr{
+.img-flickr {
 	padding: 2px;
 }
-#reset-button{
+
+.reset-button {
   margin-left: 15px;
 }
 

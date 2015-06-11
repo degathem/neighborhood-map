@@ -168,4 +168,4 @@ var bangkokLandmarks = {
       }
     }
   ]
-}
+};

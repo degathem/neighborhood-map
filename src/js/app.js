@@ -10,7 +10,7 @@ var mapViewModel = function (poiArray) {
 
   self.searchTerm = '';
 
-  self.renderMapList = function (activePois) {
+  self.renderMapList = function(activePois) {
     self.featureArray = ko.observableArray(map.data.addGeoJson(activePois));
     for (var i = 0; i < self.featureArray().length; i++) {
       self.featureArray()[i].active = ko.observable(true);
@@ -18,13 +18,13 @@ var mapViewModel = function (poiArray) {
     }
   };
 
-  self.closeInfowindow = function () {
+  self.closeInfowindow = function() {
     if (typeof lastinfowindow != 'undefined'){
       lastinfowindow.close();
     }
   };
 
-  self.search = function () {
+  self.search = function() {
     closeInfowindow();
     self.resetMap();
     for (var i = 0; i < self.featureArray().length; i++) {
@@ -35,15 +35,15 @@ var mapViewModel = function (poiArray) {
     }
   };
 
-  self.highlightLocation = function (poi){
+  self.highlightLocation = function(poi){
     map.data.overrideStyle(poi,{icon: 'https://maps.gstatic.com/mapfiles/ms2/micons/green.png'});
   };
 
-  self.unhighlightLocation = function (poi){
+  self.unhighlightLocation = function(poi){
     map.data.revertStyle(poi);
   };
 
-  self.resetMap = function (){
+  self.resetMap = function(){
     map.panTo(centerlatlng);
     map.setZoom(14);
     closeInfowindow();
@@ -55,7 +55,7 @@ var mapViewModel = function (poiArray) {
 
   };
   var lastpoi;
-  self.showInfo = function (poi){
+  self.showInfo = function(poi){
     if (typeof lastpoi != 'undefined'){
       lastpoi.clicked(false);
     }
@@ -76,7 +76,7 @@ var mapViewModel = function (poiArray) {
     map.panTo(currentlatlng);
 
     var wikiinfo = '';
-    function wikiCall () {
+    function wikiCall() {
       return $.ajax({
         url: 'http://en.wikipedia.org/w/api.php',
         data: {
@@ -100,7 +100,7 @@ var mapViewModel = function (poiArray) {
     }
 
     var flickrinfo = '';
-    function jsonFlickrApi () {
+    function jsonFlickrApi() {
       return $.ajax({
         url: 'https://api.flickr.com/services/rest/',
         data: {
@@ -121,13 +121,14 @@ var mapViewModel = function (poiArray) {
         dataType: 'jsonp',
         jsonp: 'jsoncallback'
       })
-      .fail(function(data){
+      .fail(function(data) {
         flickrinfo += 'Flickr Photos unavailable';
       })
       .done(function(data) {
         var photos = data.photos.photo;
         var photourl;
         var photoimg;
+        var photolink;
         flickrinfo += '<h4>Photos from Flickr</h4>';
         for (var i = 0; i < photos.length; i++) {
 
@@ -171,7 +172,7 @@ var mapViewModel = function (poiArray) {
     lastinfowindow = infowindow;
   };
 
-  // Clicking a point feature opens an info window 
+  // Clicking a point feature opens an info window
   map.data.addListener('click',function(event){
     var featureName = event.feature.getProperty('name');
     for (var i = 0; i < self.featureArray().length; i++) {
